@@ -18,11 +18,19 @@ from hackathons import hackathon_bp
 from chat import chat_bp
 
 
+import os
+from flask import Flask, send_from_directory
+
+# Compute absolute path to dist
+root_dir = os.path.dirname(os.path.abspath(__file__))
+static_folder = os.path.join(root_dir, "..", "dist")
+
 app = Flask(
     __name__,
-    static_folder="../dist",
+    static_folder=static_folder,
     static_url_path="/"
 )
+
 
 
 # Configure logging
