@@ -21,15 +21,18 @@ from chat import chat_bp
 import os
 from flask import Flask, send_from_directory
 
-# Compute absolute path to dist
 root_dir = os.path.dirname(os.path.abspath(__file__))
 static_folder = os.path.join(root_dir, "..", "dist")
+
+print("STATIC_FOLDER:", static_folder)
+print("INDEX EXISTS:", os.path.exists(os.path.join(static_folder, "index.html")))
 
 app = Flask(
     __name__,
     static_folder=static_folder,
     static_url_path="/"
 )
+
 
 
 
@@ -122,7 +125,6 @@ app = Flask(
     static_url_path="/"
 )
 
-# Serve React frontend
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve_react(path):
