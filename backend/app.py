@@ -16,6 +16,8 @@ from projects import projects_bp
 from notifications import notifications_bp
 from hackathons import hackathon_bp
 from chat import chat_bp
+from sqlalchemy import text
+
 
 import os
 from flask import Flask, send_from_directory
@@ -143,7 +145,7 @@ def health_check():
     try:
         # Test database connection
         session = Session()
-        session.execute('SELECT 1')
+        session.execute(text('SELECT 1'))
         session.close()
         
         logger.info("Health check passed")
