@@ -108,7 +108,6 @@ except Exception as e:
 import os
 from flask import send_from_directory
 
-# Make sure app.static_folder points to your built React files
 app = Flask(
     __name__,
     static_folder="../dist",      
