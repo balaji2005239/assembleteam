@@ -17,6 +17,7 @@ from notifications import notifications_bp
 from hackathons import hackathon_bp
 from chat import chat_bp
 
+
 app = Flask(
     __name__,
     static_folder="../dist",
@@ -110,7 +111,7 @@ from flask import send_from_directory
 # Make sure app.static_folder points to your built React files
 app = Flask(
     __name__,
-    static_folder="../dist",      # <-- adjust if necessary
+    static_folder="../dist",      
     static_url_path="/"
 )
 
