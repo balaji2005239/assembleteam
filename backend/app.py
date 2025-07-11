@@ -132,6 +132,9 @@ except Exception as e:
 import os
 from flask import send_from_directory
 
+print("=== ROUTES IN APP ===")
+for rule in app.url_map.iter_rules():
+    print(rule)
 
 
 
