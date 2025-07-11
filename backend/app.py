@@ -34,14 +34,15 @@ app = Flask(
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
-def serve_react(path):
-    print("==== REQUESTED PATH:", path)
+def serve(path):
     full_path = os.path.join(app.static_folder, path)
-    print("==== FULL FILE PATH:", full_path)
     if path != "" and os.path.exists(full_path):
+        # Serve static assets (JS, CSS, images)
         return send_from_directory(app.static_folder, path)
     else:
+        # For everything else, serve index.html so React Router can handle it
         return send_from_directory(app.static_folder, "index.html")
+
 
 
 
