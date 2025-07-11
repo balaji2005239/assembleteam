@@ -22,7 +22,7 @@ import os
 from flask import Flask, send_from_directory
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
-static_folder = os.path.join(root_dir, "..", "dist")
+static_folder = os.path.abspath(os.path.join(root_dir, "..", "dist"))
 
 print("STATIC_FOLDER:", static_folder)
 print("INDEX EXISTS:", os.path.exists(os.path.join(static_folder, "index.html")))
@@ -32,6 +32,7 @@ app = Flask(
     static_folder=static_folder,
     static_url_path="/"
 )
+
 
 
 
