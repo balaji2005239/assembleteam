@@ -104,6 +104,26 @@ except Exception as e:
     logger.error(f"Failed to register blueprints: {str(e)}")
     raise
 
+import os
+from flask import send_from_directory
+
+# Make sure app.static_folder points to your built React files
+app = Flask(
+    __name__,
+    static_folder="../dist",      # <-- adjust if necessary
+    static_url_path="/"
+)
+
+# Serve React frontend
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_react(path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, "index.html")
+
+
 @app.route('/api/health', methods=['GET'])
 def health_check():
     try:
@@ -182,15 +202,6 @@ def handle_exception(e):
         "timestamp": datetime.now().isoformat()
     }), 500
 
-from flask import send_from_directory
-
-@app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
-def serve_react(path):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, "index.html")
 
 
 if __name__ == '__main__':
