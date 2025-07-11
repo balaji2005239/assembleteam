@@ -17,21 +17,32 @@ from notifications import notifications_bp
 from hackathons import hackathon_bp
 from chat import chat_bp
 
-
 import os
 from flask import Flask, send_from_directory
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
 static_folder = os.path.abspath(os.path.join(root_dir, "..", "dist"))
 
-print("STATIC_FOLDER:", static_folder)
-print("INDEX EXISTS:", os.path.exists(os.path.join(static_folder, "index.html")))
+print("==== STATIC FOLDER:", static_folder)
+print("==== INDEX EXISTS:", os.path.exists(os.path.join(static_folder, "index.html")))
 
 app = Flask(
     __name__,
     static_folder=static_folder,
     static_url_path="/"
 )
+
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_react(path):
+    print("==== REQUESTED PATH:", path)
+    full_path = os.path.join(app.static_folder, path)
+    print("==== FULL FILE PATH:", full_path)
+    if path != "" and os.path.exists(full_path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, "index.html")
+
 
 
 
@@ -125,14 +136,6 @@ app = Flask(
     static_folder="../dist",      
     static_url_path="/"
 )
-
-@app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
-def serve_react(path):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, "index.html")
 
 
 @app.route('/api/health', methods=['GET'])
