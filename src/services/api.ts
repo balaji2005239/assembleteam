@@ -1,7 +1,8 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://assemble-backend-4soi.onrender.com/api';
+
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
