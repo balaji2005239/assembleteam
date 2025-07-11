@@ -131,11 +131,7 @@ except Exception as e:
 import os
 from flask import send_from_directory
 
-app = Flask(
-    __name__,
-    static_folder="../dist",      
-    static_url_path="/"
-)
+
 
 
 @app.route('/api/health', methods=['GET'])
